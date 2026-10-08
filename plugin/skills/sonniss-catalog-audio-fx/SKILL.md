@@ -15,7 +15,7 @@ La banque vit sur `gdrive:sound-fx/GDC2024/` (rclone). On ne fouille jamais Driv
 Les noms sont en anglais. Traduire l'intention de Romain en plusieurs mots anglais, synonymes compris, et viser une catégorie quand elle est évidente :
 
 ```bash
-S=.claude/skills/sonniss-catalog-audio-fx
+S="${CLAUDE_PLUGIN_ROOT}/skills/sonniss-catalog-audio-fx"
 bun $S/scripts/search.ts whoosh fast swoosh --max 3
 bun $S/scripts/search.ts impact boom hit --cat DSGN
 bun $S/scripts/search.ts rise riser tension build --min 3 --max 12
