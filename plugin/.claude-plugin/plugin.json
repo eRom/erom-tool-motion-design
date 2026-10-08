@@ -1,0 +1,16 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "erom-motion-design",
+  "description": "",
+  "version": "0.0.1",
+  "author": {
+    "name": "Romain Ecarnot",
+    "url": "https://github.com/eRom"
+  },
+  "repository": "https://github.com/eRom/erom-motion-design",
+  "license": "MIT",
+  "keywords": [
+
+  ],
+  "skills": "./skills/"
+}
