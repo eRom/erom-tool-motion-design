@@ -18,5 +18,6 @@
     "hyperframes",
     "remotion"
   ],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
 }
