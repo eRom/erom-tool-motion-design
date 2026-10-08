@@ -9,6 +9,13 @@ générateurs d'images et de musique, banque de bruitages Sonniss).
 se rattacher à une limite observée sur ce chantier (ou un suivant), pas à une
 envie générique.
 
+**HyperFrames est acquis.** Le motion (composition, animation, rendu) est fait
+par le plugin `hyperframes`. Ce plugin ne le remplace pas et n'a pas de moteur
+à lui : il guide Claude pour brancher des outils externes (images, musique,
+bruitages, références) dans une composition HyperFrames. Une ancienne idée de
+CLI maison (`motion render`, `motion ears`…) a été abandonnée le 2026-10-08 :
+ne pas la réintroduire.
+
 Ce fichier dit comment travailler ici. Il décrit un contrat, pas un état atteint :
 la section « État actuel » dit ce qui n'y est pas encore conforme.
 
@@ -96,11 +103,10 @@ Dépôt scaffoldé, deux skills écrites, rien de publié.
 
 | Élément | État |
 |---|---|
-| `skills/motion-context` | écrite : inventaire des outils et des références. Description faible (« Triggers: Motion Design ») |
-| `skills/sonniss-catalog-audio-fx` | écrite, scripts `search.ts` et `fetch.sh`. Dépend de `rclone` et du remote `gdrive:` |
-| `shared/references/` | 14 vidéos décortiquées. 12 dossiers portent un ID opaque, sans README qui dise quelle vidéo c'est |
+| `skills/motion-context` | écrite : vérifie `hyperframes` et `remotion`, passe la main à `/hyperframes:hyperframes`, liste références et outils externes |
+| `skills/sonniss-catalog-audio-fx` | écrite, scripts `search.ts` et `fetch.sh`. Pose les bruitages en pistes `<audio>` HyperFrames. Dépend de `rclone` et du remote `gdrive:`. Pose `<audio>` pas encore éprouvée sur un vrai rendu |
+| `shared/references/` | 14 vidéos décortiquées, indexées dans `INDEX.md` (famille, durée, tempo, signature) |
 | `shared/docs-tools/` | 4 guides : Seedream 5.0 Pro, Nanobanana 2.1, Lyria, Pixabay |
-| CLI `motion` | **n'existe pas.** `sonniss-catalog-audio-fx` et `motion-context` citent `motion render`, `motion ears`, `motion frames`, `motion music`, `Motion.scene`, `assets/ears.json` : rien de tout ça n'est dans ce dépôt ni dans `erom-agence-demo-reel` |
 | `assets/plugin.png` | placeholder, à remplacer par `/erom-dev-plugin:illustrate` |
-| Onboarding caserne (`_memory_/ONBOARD.md`) | non fait : ni Linear, ni Slack, ni index RAG |
+| Onboarding caserne (`_memory_/ONBOARD.md`) | fait : Linear (team EAT), Slack `#motion-design-tools` |
 | Publication marketplace | non faite |

@@ -1,6 +1,6 @@
 ---
 name: sonniss-catalog-audio-fx
-description: Trouve et récupère des bruitages (SFX) dans la banque Sonniss GDC 2024 de Romain (609 WAV, 27,5 Go sur Google Drive) pour une scène motion design, puis les mixe à la musique pour qu'ils s'entendent au rendu. À utiliser dès qu'une scène, un teaser ou une vidéo a besoin d'un son autre que la musique, même sans le mot « Sonniss » - whoosh, impact, boom, montée, braam, stinger, clic d'interface, glitch, ambiance, bruitage, sound design, « il me faut un son de… », « ajoute un effet sonore sur le titre », « ça manque de punch à 14 s ». Pas pour générer une musique (c'est `motion music` / Lyria).
+description: Trouve et récupère des bruitages (SFX) dans la banque Sonniss GDC 2024 de Romain (609 WAV, 27,5 Go sur Google Drive) pour une composition HyperFrames, puis les pose comme pistes `<audio>` calées sur la musique. À utiliser dès qu'une scène, un teaser ou une vidéo a besoin d'un son autre que la musique, même sans le mot « Sonniss » - whoosh, impact, boom, montée, braam, stinger, clic d'interface, glitch, ambiance, bruitage, sound design, « il me faut un son de… », « ajoute un effet sonore sur le titre », « ça manque de punch à 14 s ». Pas pour générer une musique (c'est Lyria, voir `motion-context`), ni pour régler le mix une fois les pistes posées (c'est `/hyperframes:hyperframes-audio`).
 ---
 
 # Banque de bruitages Sonniss GDC 2024
@@ -29,39 +29,43 @@ Proposer 3 à 5 candidats avec leur durée et ce qui les distingue (le nom en di
 ## 2. Récupérer et faire écouter
 
 ```bash
-bash $S/scripts/fetch.sh <dossier de scène> "<path>" ["<path>"…]
-afplay "<scène>/assets/sfx/<fichier>.wav"
+bash $S/scripts/fetch.sh <projet HyperFrames> "<path>" ["<path>"…]
+afplay "<projet>/assets/sfx/<fichier>.wav"
 ```
 
-Les fichiers arrivent dans `<scène>/assets/sfx/`. Télécharger les 3 à 5 candidats d'un coup coûte peu (la plupart pèsent quelques Mo) et permet de les comparer. Une fois le choix fait, mettre les recalés à la Corbeille (`trash`) pour garder la scène légère.
+Les fichiers arrivent dans `<projet>/assets/sfx/`, à côté de l'`index.html` de la composition. Télécharger les 3 à 5 candidats d'un coup coûte peu (la plupart pèsent quelques Mo) et permet de les comparer. Une fois le choix fait, mettre les recalés à la Corbeille (`trash`) pour garder le projet léger.
 
-Une ambiance de plusieurs minutes se coupe avant le mix, sinon elle alourdit tout :
+Une ambiance de plusieurs minutes se coupe avant de la poser, sinon elle alourdit le projet :
 
 ```bash
 ffmpeg -ss 12 -t 6 -i assets/sfx/long.wav -c:a pcm_s24le assets/sfx/long-cut.wav
 ```
 
-## 3. Mixer : sans ça, le bruitage ne s'entend pas
+## 3. Poser dans la composition
 
-`motion render` n'embarque qu'**une** piste son, celle du champ `audio:` de `Motion.scene`. Un bruitage posé dans `assets/sfx/` sans mix n'apparaît donc jamais dans le MP4. On fabrique `assets/mix.wav` = musique + bruitages calés, puis on pointe `audio:` dessus.
+HyperFrames mixe lui-même toutes les pistes `<audio>` de la composition, en preview comme au rendu. Pas de pré-mix ffmpeg : chaque bruitage retenu devient une piste à part, calée par son `data-start` (en secondes).
 
-Les instants viennent des oreilles de la scène (`assets/ears.json`) : un impact sur un drop, un whoosh qui démarre 0,2 s avant une coupe pour arriver pile dessus.
+Les instants viennent de la musique. `npx hyperframes beats <projet> --json` analyse la piste marquée `data-timeline-role="music"` et donne ses temps. Un impact tombe sur un drop ; un whoosh démarre environ 0,2 s avant une coupe pour arriver pile dessus.
 
-```bash
-ffmpeg -y -i assets/music.mp3 -i assets/sfx/whoosh.wav -i assets/sfx/boom.wav -filter_complex "\
-[1:a]aresample=48000,aformat=channel_layouts=stereo,volume=0.7,adelay=3800:all=1[s1];\
-[2:a]aresample=48000,aformat=channel_layouts=stereo,volume=0.9,adelay=14130:all=1[s2];\
-[0:a]aresample=48000,aformat=channel_layouts=stereo[m];\
-[m][s1][s2]amix=inputs=3:duration=first:normalize=0,alimiter=limit=0.95[out]" \
--map "[out]" -c:a pcm_s24le assets/mix.wav
+```html
+<audio id="music" src="assets/music.mp3" data-timeline-role="music"
+       data-start="0" data-track-index="10" data-volume="1"></audio>
+
+<audio id="sfx-whoosh-title" src="assets/sfx/whoosh.wav"
+       data-start="3.8" data-track-index="11" data-volume="0.7"></audio>
+<audio id="sfx-boom-drop" src="assets/sfx/boom.wav"
+       data-start="14.13" data-track-index="11" data-volume="0.9"></audio>
 ```
 
-- `adelay` est en millisecondes : 14,13 s donne `14130`.
-- `aformat=channel_layouts=stereo` ramène les sons mono, 4 canaux ou surround au stéréo, sinon `amix` refuse ou déséquilibre.
-- `normalize=0` garde la musique à son niveau (sinon `amix` la baisse à chaque son ajouté), `alimiter` évite la saturation quand un impact tombe sur un kick.
-- Garder `ears.json` calculé sur la musique seule : repasser `motion ears` sur le mix ferait prendre les bruitages pour des temps.
+- **Chaque `<audio>` a un `id`.** Sans `id`, le mixeur ne la voit pas et le rendu est muet sur ce son (`lint` le signale : `media_missing_id`).
+- Un `id` qui dit le rôle et l'instant (`sfx-boom-drop`) rend la timeline lisible dans le Studio.
+- Les bruitages vont sur leur propre `data-track-index`, séparé de la musique : une piste par sorte d'élément.
+- `data-duration` peut être omis pour un son court joué en entier. On le met pour couper une ambiance longue sans la retailler.
+- Jamais d'attribut `crossorigin` sur un `<audio>` : `lint` le refuse.
 
-Puis dans `index.html` : `audio: "assets/mix.wav"`. Vérifier sur le MP4 rendu, à l'oreille ou avec `motion frames` autour des instants posés, et faire écouter un extrait à Romain : c'est lui qui juge si le son tombe juste.
+Le réglage fin (fondu, limiteur quand un impact tombe sur un kick, ducking de la musique) se fait avec `/hyperframes:hyperframes-audio`, via `data-fx-chain` et `data-automation` sur la piste.
+
+Vérifier avec `npx hyperframes lint` puis à l'écoute du rendu, autour des instants posés. Faire écouter un extrait à Romain : c'est lui qui juge si le son tombe juste.
 
 ## Si rclone refuse
 
