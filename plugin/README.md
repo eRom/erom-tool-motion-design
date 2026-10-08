@@ -1,3 +1,5 @@
+![erom-motion-design](assets/erom-motion-design.png)
+
 # erom-motion-design
 
 Plugin Claude Code. Boîte à outils de motion design : références décortiquées de vidéos marquantes, guides des générateurs d'images et de musique, banque de bruitages Sonniss, pour aller au-delà des limites de HyperFrames.

@@ -1,4 +1,4 @@
-![erom-motion-design](assets/plugin.png)
+![erom-motion-design](plugin/assets/erom-motion-design.png)
 
 # erom-motion-design
 

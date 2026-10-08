@@ -30,7 +30,7 @@ plugin/                          seul dossier distribué (source marketplace git
   shared/references/<id>/        vidéos de référence décortiquées, 4 fichiers chacune
   shared/docs-tools/             guides des outils externes (Seedream, Nanobanana, Lyria, Pixabay)
   agents/<nom>.md                subagents, découverts automatiquement
-assets/plugin.png                image de tête du README racine
+  assets/erom-motion-design.png  image de tête du README racine
 docs/                            specs, plans, recherches, revues
 _memory_/                        connaissance de session persistée, indexée par le vault RAG
 .claude/                         notes et settings locaux, jamais distribués
@@ -108,6 +108,6 @@ Dépôt scaffoldé, trois skills écrites, rien de publié.
 | `skills/gemini-vocal-generator` | écrite, 3 scripts Python (`uv`). Voice design, TTS single et dialogue, pose `<audio>` HyperFrames. 6 evals passées le 2026-10-08 sur l'API réelle ; pose dans une composition pas encore éprouvée |
 | `shared/references/` | 14 vidéos décortiquées, indexées dans `INDEX.md` (famille, durée, tempo, signature) |
 | `shared/docs-tools/` | 4 guides : Seedream 5.0 Pro, Nanobanana 2.1, Lyria, Pixabay |
-| `assets/plugin.png` | placeholder, à remplacer par `/erom-dev-plugin:illustrate` |
+| `assets/erom-motion-design.png` | carte au fusain livrée le 2026-10-08 (`/erom-dev-plugin:illustrate`) |
 | Onboarding caserne (`_memory_/ONBOARD.md`) | fait : Linear (team EAT), Slack `#motion-design-tools` |
 | Publication marketplace | non faite |
