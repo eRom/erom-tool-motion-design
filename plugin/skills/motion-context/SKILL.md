@@ -1,6 +1,6 @@
 ---
 name: motion-context
-description: "Point d'entrée de toute création de motion design : vidéo animée, teaser, intro, générique, clip, reel, kinetic typography, motion graphics, démo produit animée. Vérifie que HyperFrames et Remotion sont prêts, puis apporte ce qu'ils n'ont pas : références de vidéos décortiquées, génération d'images (Seedream, Nanobanana), images libres (Pixabay), musique (Lyria), bruitages (Sonniss). À charger avant `/hyperframes:hyperframes` dès que Romain veut fabriquer une vidéo, même sans dire « motion design »."
+description: "Point d'entrée de toute création de motion design : vidéo animée, teaser, intro, générique, clip, reel, kinetic typography, motion graphics, démo produit animée. Vérifie que HyperFrames et Remotion sont prêts, puis apporte ce qu'ils n'ont pas : références de vidéos décortiquées, génération d'images (Seedream, Nanobanana), génération de vidéos (Seedance 2.5, MiniMax H3), images libres (Pixabay), musique (Lyria), bruitages (Sonniss). À charger avant `/hyperframes:hyperframes` dès que Romain veut fabriquer une vidéo, même sans dire « motion design »."
 ---
 
 # Motion Context
@@ -49,6 +49,8 @@ Tu peux aussi chercher des références sur Internet librement (builtin `WebSear
 
 ## 4. Outils externes
 
+Liste non exhaustive d'outils disponible.
+
 ### Génération d'images
 
 1. **Seedream 5.0 Pro** (ByteDance via OpenRouter)
@@ -60,6 +62,30 @@ Voir `${CLAUDE_PLUGIN_ROOT}/shared/docs-tools/Seedream-5.0-Pro-image-gen.md`
 
 Ce modèle est redoutable pour sa vitesse et son contrôle itératif ultra-rapide. Il est idéal pour générer des arrière-plans fluides ou des textures abstraites à la volée (0,02 $ à 0,03 $ par image).
 Voir `${CLAUDE_PLUGIN_ROOT}/shared/docs-tools/Nanobanana-2.1-image-gen.md`
+
+### Génération de vidéos
+
+Pour fabriquer des plans vidéo à poser dans la composition : fond animé (background effect), texture en mouvement, calque d'ambiance, overlay, plan d'illustration. Les deux modèles passent par fal, avec la clé `FAL_KEY` lue depuis l'environnement. Tous deux génèrent l'image et le son en une seule passe. Tarifs fal relevés le 2026-10-08 (page comparative fal du 16 août 2026) : à revérifier avant un gros lot.
+
+Chaque vidéo générée devient un `<video>` HyperFrames, pas un `<audio>`. Si le son ne sert pas, le couper : Seedance 2.5 a `generate_audio: false`, MiniMax H3 n'a pas d'option équivalente et renvoie toujours du son (le retirer côté composition).
+
+1. **Seedance 2.5** (ByteDance, via fal)
+
+Le choix pour les plans longs d'un seul tenant : 4 à 30 secondes, 480p, 720p ou 1080p, ratios de `21:9` à `9:16` ou `auto`. Jusqu'à 50 fichiers de référence (images, vidéos, audios), cités `@Image1`, `@Video1`, `@Audio1` dans le prompt. L'endpoint de référence sert aussi à éditer ou prolonger une vidéo existante (`task: "editing"` ou `"extension"`). Facturé au token, 0,0214 $ les 1 000 tokens : environ 4,62 $ les 10 s en 720p (réglage par défaut). Le mode `draft: true` fait un aperçu 480p à compléter ensuite en 1080p, sous sept jours. Point faible signalé par fal : il rejette souvent les images de référence avec des visages humains.
+Endpoints : `bytedance/seedance-2.5/text-to-video`, `bytedance/seedance-2.5/image-to-video`, `bytedance/seedance-2.5/reference-to-video`.
+
+2. **MiniMax H3** (MiniMax, via fal)
+
+Le choix pour le volume et le prix : 5 à 15 secondes, 480P et 768P natifs, 2K et 4K obtenus en agrandissant le 768P. Facturé à la seconde : 0,05 $ (480P), 0,08 $ (768P), 0,13 $ (2K), 0,16 $ (4K). Jusqu'à 12 fichiers de référence (9 images, 3 vidéos, 3 audios), cités `Image 1`, `Video 1`, `Audio 1` en toutes lettres (sans `@`). Le paramètre `target_audio_url` impose une bande-son existante à la vidéo générée.
+Endpoints : `minimax/h3/text-to-video`, `minimax/h3/image-to-video`, `minimax/h3/reference-to-video`.
+
+Variante **H3 Max**, post-entraînée par fal pour mieux suivre le prompt : 480P, 768P (défaut) ou 1080P, 5 à 15 s, à partir de 0,03 $ la seconde. C'est le choix par défaut de fal pour une vidéo courte sans exigence de 2K. Endpoints : `minimax/h3-max/text-to-video`, `minimax/h3-max/image-to-video`, `minimax/h3-max/reference-to-video`. La famille H3 Max a aussi des styles prêts à l'emploi, utiles en texture ou en overlay : `minimax/h3-max/styles/vhs`, `low-poly`, `16bit-pixel`, `hand-drawn`, `retro-toon-70s`.
+
+**Lequel prendre.** Plan de plus de 15 s en une pièce, ou beaucoup de références : Seedance 2.5. Plan court, budget serré : H3 Max. Besoin de 2K ou 4K : MiniMax H3.
+
+**Limite à connaître.** Aucune des deux pages fal ne mentionne de fond transparent (pas de canal alpha). Un overlay se prépare donc sur fond noir ou uni, puis se pose dans la composition avec un mode de fusion (`mix-blend-mode: screen` pour la lumière et la matière) ou une incrustation. Cette pose n'a pas encore été éprouvée sur un vrai rendu.
+
+Voir les pages d'API : `https://fal.ai/models/bytedance/seedance-2.5/text-to-video/api` et `https://fal.ai/models/minimax/h3/text-to-video/api`. Le MCP de la doc fal (`https://fal.ai/docs/mcp`) ne les indexe pas encore : il s'arrête à Seedance 2.0. Le MCP compte fal (`https://mcp.fal.ai/mcp-relay`, connexion OAuth) donne le schéma exact (`get_model_schema`) et le prix (`get_pricing`) de chaque endpoint : le consulter avant de lancer une génération.
 
 ### Bibliothèque d'images libres de droits
 

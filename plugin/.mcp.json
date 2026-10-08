@@ -1,0 +1,13 @@
+
+{
+  "mcpServers": {
+    "fal-docs": {
+      "type": "http",
+      "url": "https://fal.ai/docs/mcp"
+    },
+    "fal": {
+      "type": "http",
+      "url": "https://mcp.fal.ai/mcp-relay"
+    }
+  }
+}

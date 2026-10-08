@@ -3,3 +3,4 @@ node_modules/
 __pycache__/
 _memory_/ONBOARD.md
 .claude/settings.local.json.bak
+/.mcp.json
