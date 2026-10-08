@@ -99,12 +99,13 @@ le moment de les préparer, pas avant.
 
 ## État actuel - 2026-10-08
 
-Dépôt scaffoldé, deux skills écrites, rien de publié.
+Dépôt scaffoldé, trois skills écrites, rien de publié.
 
 | Élément | État |
 |---|---|
 | `skills/motion-context` | écrite : vérifie `hyperframes` et `remotion`, passe la main à `/hyperframes:hyperframes`, liste références et outils externes |
 | `skills/sonniss-catalog-audio-fx` | écrite, scripts `search.ts` et `fetch.sh`. Pose les bruitages en pistes `<audio>` HyperFrames. Dépend de `rclone` et du remote `gdrive:`. Pose `<audio>` pas encore éprouvée sur un vrai rendu |
+| `skills/gemini-vocal-generator` | écrite, 3 scripts Python (`uv`). Voice design, TTS single et dialogue, pose `<audio>` HyperFrames. 6 evals passées le 2026-10-08 sur l'API réelle ; pose dans une composition pas encore éprouvée |
 | `shared/references/` | 14 vidéos décortiquées, indexées dans `INDEX.md` (famille, durée, tempo, signature) |
 | `shared/docs-tools/` | 4 guides : Seedream 5.0 Pro, Nanobanana 2.1, Lyria, Pixabay |
 | `assets/plugin.png` | placeholder, à remplacer par `/erom-dev-plugin:illustrate` |

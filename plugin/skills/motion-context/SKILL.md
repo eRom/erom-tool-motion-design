@@ -70,6 +70,10 @@ Voir `${CLAUDE_PLUGIN_ROOT}/shared/docs-tools/Pixabay.md`
 
 Banque Sonniss GDC 2024 : 609 WAV libres de droits sur Google Drive (`gdrive:sound-fx/GDC2024/`), en complément de la bibliothèque SFX de HyperFrames (`/hyperframes:media-use`). Recherche, téléchargement et pose dans la composition : skill `sonniss-catalog-audio-fx`. Chaque bruitage devient une piste `<audio>` HyperFrames, mixée au rendu avec la musique.
 
+### Voix (Gemini TTS)
+
+Voix off, narration, dialogue à plusieurs personnages : skill `gemini-vocal-generator`. Elle crée des voix sur mesure depuis une description (voice design), synthétise un texte ou un dialogue en WAV, et le pose comme piste `<audio>` dans la composition. Pour une voix off simple avec une voix prête, `/hyperframes:media-use` suffit aussi et donne en prime le minutage des mots pour les sous-titres.
+
 ### Musique (Google)
 
 Lyria 3.5 et Lyria 3 Clip, la suite de modèles de génération musicale de Google, accessible via l'API Gemini. Lyria 3.5 génère un son stéréo de haute qualité à 44,1 kHz à partir de textes ou d'images. Ces modèles offrent une cohérence structurelle, incluant les voix, les paroles synchronisées et les arrangements instrumentaux complets.

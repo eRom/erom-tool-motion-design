@@ -1,0 +1,47 @@
+{
+  "skill_name": "gemini-vocal-generator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Synthétise un texte français simple avec une voix prebuilt (Kore) : \"Bonjour ! Ceci est un test de synthèse vocale, tout marche très bien.\"",
+      "expected_output": "WAV 24 kHz mono 16-bit, seconds > 4, header RIFF valide",
+      "files": [],
+      "observed_2026_10_08": "OK 5.04 s, RIFF PCM 16 bit mono 24000 Hz"
+    },
+    {
+      "id": 2,
+      "prompt": "Dialogue Joe/Jane à deux voix prebuilt (script.txt, 3 tours) : génère un seul fichier.",
+      "expected_output": "un seul appel conversationnel, un WAV final",
+      "files": ["script.txt"],
+      "observed_2026_10_08": "OK 10.28 s, un appel unique (pas de repli tour-par-tour)"
+    },
+    {
+      "id": 3,
+      "prompt": "Crée une voix designée française : narratrice posée, ~30 ans, chaleureuse.",
+      "expected_output": "voice_id permanent + WAV d'aperçu écrit",
+      "files": [],
+      "observed_2026_10_08": "voice_fr9lhz6vdfrm, preview écrit, visible dans voices.py list"
+    },
+    {
+      "id": 4,
+      "prompt": "Réutilise la voix designée créée en 3 pour un texte simple.",
+      "expected_output": "WAV avec la voix designée",
+      "files": [],
+      "observed_2026_10_08": "OK 5.04 s"
+    },
+    {
+      "id": 5,
+      "prompt": "Dialogue mélangé Narrateur (voix designée) + Invitee (Kore).",
+      "expected_output": "un appel par tour, concaténés avec gap 200 ms",
+      "files": ["script.txt"],
+      "observed_2026_10_08": "OK 16.16 s, chemin tour-par-tour"
+    },
+    {
+      "id": 6,
+      "prompt": "Draft avec gemini-3.8-flash-lite-tts et --model.",
+      "expected_output": "WAV plus rapide/produit via le Lite",
+      "files": [],
+      "observed_2026_10_08": "OK 2.92 s"
+    }
+  ]
+}
