@@ -16,7 +16,9 @@
     "sound-design",
     "sfx",
     "hyperframes",
-    "remotion"
+    "remotion",
+    "MiniMax H3",
+    "Seedance 2.5"
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json"
