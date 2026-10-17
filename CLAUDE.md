@@ -81,7 +81,9 @@ C'est la seule preuve que le manifeste charge ce qu'on croit : un dossier
 
 ## Publication
 
-Non publié à ce jour. La publication ne se fait pas à la main : la skill `release`
+Publié depuis le 2026-10-17 (0.1.0) sur `eRom/erom-tool-motion-design`, entrée
+`git-subdir` (`path: plugin`, `ref: main`, `strict: true`) dans la marketplace. La
+publication ne se fait pas à la main : la skill `release`
 du plugin `erom-dev-plugin` la porte de bout en bout, depuis ce dépôt.
 
 ```
@@ -93,21 +95,22 @@ et pousse ce dépôt, puis met à jour `~/dev/erom-marketplace` (entrée du plug
 metadata, README), et vérifie la CI. Toujours dans cet ordre : le plugin d'abord,
 la marketplace ensuite, parce que l'entrée pointe `ref: main` sur ce dépôt.
 
-Sur une **première** publication, elle s'arrête et demande : l'entrée à créer
-réclame une description, une source `git-subdir` et un choix de `strict`. C'est
-le moment de les préparer, pas avant.
+Les releases suivantes sont de simples bumps : plugin, puis entrée et
+`metadata.version` de la marketplace au même niveau.
 
-## État actuel - 2026-10-08
+## État actuel - 2026-10-17
 
-Dépôt scaffoldé, trois skills écrites, rien de publié.
+Quatre skills écrites, publié en 0.1.0.
 
 | Élément | État |
 |---|---|
 | `skills/motion-context` | écrite : vérifie `hyperframes` et `remotion`, passe la main à `/hyperframes:hyperframes`, liste références et outils externes |
 | `skills/sonniss-catalog-audio-fx` | écrite, scripts `search.ts` et `fetch.sh`. Pose les bruitages en pistes `<audio>` HyperFrames. Dépend de `rclone` et du remote `gdrive:`. Pose `<audio>` pas encore éprouvée sur un vrai rendu |
 | `skills/gemini-vocal-generator` | écrite, 3 scripts Python (`uv`). Voice design, TTS single et dialogue, pose `<audio>` HyperFrames. 6 evals passées le 2026-10-08 sur l'API réelle ; pose dans une composition pas encore éprouvée |
+| `skills/reverse-animation` | écrite le 2026-10-17, scripts `glimpse.ts` (Glimpse via OpenRouter, ralenti x8 par défaut) et `contact-sheet.sh`. Recette sur une vidéo témoin à vérité connue : Glimpse juste sur la géométrie, faux sur durée et easing, d'où la mesure du timing par planche-contact. Pas encore éprouvée de bout en bout sur une vraie capture |
+| Génération vidéo | Seedance 2.5 et MiniMax H3 via les MCP `fal` et `fal-docs` (`plugin/.mcp.json`), section dans `motion-context` |
 | `shared/references/` | 14 vidéos décortiquées, indexées dans `INDEX.md` (famille, durée, tempo, signature) |
 | `shared/docs-tools/` | 4 guides : Seedream 5.0 Pro, Nanobanana 2.1, Lyria, Pixabay |
 | `assets/erom-motion-design.png` | carte au fusain livrée le 2026-10-08 (`/erom-dev-plugin:illustrate`) |
 | Onboarding caserne (`_memory_/ONBOARD.md`) | fait : Linear (team EAT), Slack `#motion-design-tools` |
-| Publication marketplace | non faite |
+| Publication marketplace | faite le 2026-10-17 : plugin 0.1.0 (`952bba7`), marketplace metadata 0.30.0 (`3227af9`), CI verte |
