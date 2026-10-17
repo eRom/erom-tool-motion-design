@@ -1,13 +1,13 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-plugin-manifest.json",
   "name": "erom-motion-design",
-  "description": "Boîte à outils de motion design : références décortiquées de vidéos marquantes, guides des générateurs d'images, de vidéos et de musique, banque de bruitages Sonniss, pour aller au-delà des limites de HyperFrames.",
-  "version": "0.0.1",
+  "description": "Boîte à outils de motion design : références décortiquées de vidéos marquantes, guides des générateurs d'images, de vidéos et de musique, banque de bruitages Sonniss, voix Gemini et rétro-ingénierie d'animations front-end, pour aller au-delà des limites de HyperFrames.",
+  "version": "0.1.0",
   "author": {
     "name": "Romain Ecarnot",
     "url": "https://github.com/eRom"
   },
-  "repository": "https://github.com/eRom/erom-motion-design",
+  "repository": "https://github.com/eRom/erom-tool-motion-design",
   "license": "MIT",
   "keywords": [
     "motion-design",
@@ -17,6 +17,9 @@
     "sfx",
     "hyperframes",
     "remotion",
+    "reverse-engineering",
+    "glimpse",
+    "gsap",
     "MiniMax H3",
     "Seedance 2.5"
   ],
